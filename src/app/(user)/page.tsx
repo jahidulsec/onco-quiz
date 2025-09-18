@@ -1,26 +1,37 @@
+import Logo from "@/components/logo/logo";
 import { Section } from "@/components/section/section";
 import { PageHeading, PageSubTitle } from "@/components/typography/heading";
 import { Button } from "@/components/ui/button";
 import CardSection from "@/feature/home/components/card-section";
+import Link from "next/link";
 import React from "react";
 
-export default function UserHomePage() {
+export default async function UserHomePage() {
   return (
     <>
-      <Section>
-        <PageHeading className="text-balance text-primary">
-          Challenge your <br /> knowledge
-        </PageHeading>
-
-        <div className="flex justify-between items-center gap-3 flex-wrap">
-          <PageSubTitle>Quiz starts at 11:00 PM</PageSubTitle>
-          <Button>Participates</Button>
-        </div>
-      </Section>
+      <HeaderContainer />
       <CardContainer />
     </>
   );
 }
+
+const HeaderContainer = async () => {
+  return (
+    <Section>
+      <Logo className="flex-row mb-6 [&_h4]:max-w-10 leading-4" />
+      <PageHeading className="text-balance text-primary">
+        Challenge your <br /> knowledge
+      </PageHeading>
+
+      <div className="flex justify-between items-center gap-3 flex-wrap">
+        <PageSubTitle>Quiz starts at 11:00 PM</PageSubTitle>
+        <Button size={"sm"} asChild>
+          <Link href={"/quiz"}>Participates</Link>
+        </Button>
+      </div>
+    </Section>
+  );
+};
 
 const CardContainer = async () => {
   return <CardSection />;

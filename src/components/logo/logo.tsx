@@ -14,7 +14,7 @@ export default function Logo({
       <div className="bg-secondary text-secondary-foreground flex size-8 items-center justify-center rounded-md">
         <Brain className="size-6" />
       </div>
-      Onco Mastermind
+      <h4>Onco Mastermind</h4>
     </div>
   );
 }
