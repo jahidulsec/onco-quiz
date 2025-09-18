@@ -24,6 +24,14 @@ export const addParticipate = async (res: ParticipateType) => {
       };
     }
 
+    const isParticipated = await db.group_user.findFirst({
+      where: {
+        user_id: res.user_id,
+      },
+    });
+
+    if (isParticipated?.id) return null;
+
     const response = await db.group_user.create({
       data: { ...res, start_date: new Date() },
     });

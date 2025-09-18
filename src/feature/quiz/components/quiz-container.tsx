@@ -41,7 +41,7 @@ export default function QuizContainer({
       ...prev,
       {
         user_id,
-        question_id: currentQuestion.id,
+        quiz_id: currentQuestion.id,
         answer: checkedValue,
         group_id: currentQuestion.group_id,
         correct_answer: currentQuestion.answer,
@@ -52,7 +52,7 @@ export default function QuizContainer({
     setCheckedValue(undefined);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     startTransition(async () => {
       const response = await submitQuizzes(submitResponse);
       if (response.success) {
@@ -61,6 +61,7 @@ export default function QuizContainer({
       } else if (response.toast) {
         toast.error(response.toast);
       }
+      console.error(response)
     });
   };
 
@@ -89,7 +90,7 @@ export default function QuizContainer({
             </p>
 
             {currentQuestion.option_1 && currentQuestion.option_1 != "NULL" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 gap-5">
                 {currentQuestion.option_1 && (
                   <CustomButton
                     data-selected={checkedValue === currentQuestion.option_1}
@@ -185,7 +186,7 @@ const CustomButton = ({
     <Button
       type="button"
       className={cn(
-        "bg-background h-fit text-wrap whitespace-normal text-primary flex items-center text-left justify-start gap-6 border hover:border-primary hover:bg-primary data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground",
+        "bg-background h-fit text-wrap whitespace-normal text-primary flex items-center text-left justify-start gap-6 border hover:border-primary hover:bg-primary-foreground data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground",
         className
       )}
       {...props}

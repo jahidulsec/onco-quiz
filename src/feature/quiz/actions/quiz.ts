@@ -20,7 +20,6 @@ const quizzesSubmitSchema = z.object({
 
 export const submitQuizzes = async (response: any[]) => {
   const res = response;
-  console.log(res);
   try {
     const result = quizzesSubmitSchema.safeParse({ data: res });
 
@@ -35,7 +34,8 @@ export const submitQuizzes = async (response: any[]) => {
         const { group_id, correct_answer, ...rest } = item;
         return {
           ...rest,
-          mark: rest.answer === correct_answer ? 1 : 0,
+          mark:
+            rest.answer.toLowerCase() === correct_answer.toLowerCase() ? 1 : 0,
         };
       }),
     });
@@ -62,6 +62,8 @@ export const submitQuizzes = async (response: any[]) => {
         end_date: currentTime,
       },
     });
+
+    console.log('hello')
 
     revalidatePath("/preview");
     revalidatePath("/");
