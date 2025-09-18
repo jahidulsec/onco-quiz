@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 5009",
     "lint": "eslint",
-    "deploy": "sh scripts/deploy.sh"
+    "deploy": "sh script/deploy.sh"
   },
   "dependencies": {
     "@bprogress/next": "^3.2.12",
