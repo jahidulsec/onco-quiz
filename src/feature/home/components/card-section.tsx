@@ -10,7 +10,7 @@ export default function CardSection({ result }: { result: any }) {
       <Card
         item={{
           title: "Rank",
-          icon: BookCopy,
+          icon: GraduationCap,
           value: (
             <p className="text-2xl font-semibold">
               {Number(result.data?.[0]?.rank)}
@@ -22,7 +22,7 @@ export default function CardSection({ result }: { result: any }) {
       <Card
         item={{
           title: "Questions",
-          icon: GraduationCap,
+          icon: BookCopy,
           value: (
             <p>
               <strong className="text-2xl">
