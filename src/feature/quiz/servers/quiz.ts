@@ -3,16 +3,26 @@
 import db from "../../../../db/db";
 import { format } from "date-fns";
 
-export const getQuizzes = async () => {
+export const getQuizzes = async (userId: string) => {
   const currentDate = new Date();
   const newDate = new Date();
   newDate.setDate(currentDate.getDate() + 1);
 
+  // generate a number between 1 to 5
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
+
   try {
+    const isParticipated = await db.group_user.findFirst({
+      where: {
+        user_id: userId,
+      },
+    });
+
     const [data, count] = await Promise.all([
       db.quiz.findMany({
         where: {
           quiz_group: {
+            id: isParticipated?.group_id ?? randomNumber.toString(),
             start: {
               gte: new Date(format(currentDate, "yyyy-MM-dd")),
               lt: new Date(format(newDate, "yyyy-MM-dd")),
@@ -23,6 +33,7 @@ export const getQuizzes = async () => {
       db.quiz.count({
         where: {
           quiz_group: {
+            id: isParticipated?.group_id ?? randomNumber.toString(),
             start: {
               gte: new Date(format(currentDate, "yyyy-MM-dd")),
               lt: new Date(format(newDate, "yyyy-MM-dd")),

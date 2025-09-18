@@ -10,6 +10,8 @@ import { useRouter } from "@bprogress/next";
 import { CircleCheckBig } from "lucide-react";
 import { quiz, quiz_submit } from "@prisma/client";
 import { submitQuizzes } from "../actions/quiz";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function QuizContainer({
   question,
@@ -81,30 +83,68 @@ export default function QuizContainer({
       <Form className="mt-6">
         {currentQuestion ? (
           <>
-            <div className="text- font-semibold rounded-md bg-secondary/50 min-h-20 p-4 text-foreground border border-secondary-foreground/35 relative flex gap-3">
-              <p className="text-primary">Q{submitCount + 1}.</p>{" "}
-              <p>{currentQuestion?.question}</p>
-            </div>
+            <p className=" font-semibold rounded-md bg-secondary/50 min-h-20 p-4 text-foreground border border-secondary-foreground/35 relative">
+              <span className="text-primary">Q{submitCount + 1}.</span>{" "}
+              <span>{currentQuestion?.question}</span>
+            </p>
 
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[1, 2, 3, 4].map((val) => (
-                <CustomButton
-                  key={val}
-                  type="button"
-                  data-selected={checkedValue === val}
-                  onClick={() => setCheckedValue(val)}
-                >
-                  <div className="size-5 bg-secondary rounded-full text-xs text-foreground border border-secondary-foreground/50">
-                    {val}
-                  </div>
-                  <div>
-                    {String(
-                      currentQuestion?.[`option_${val}` as keyof question]
-                    ) || ""}
-                  </div>
-                </CustomButton>
-              ))}
-            </div> */}
+            {currentQuestion.option_1 && currentQuestion.option_1 != "NULL" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {currentQuestion.option_1 && (
+                  <CustomButton
+                    data-selected={checkedValue === currentQuestion.option_1}
+                    type="button"
+                    onClick={() =>
+                      setCheckedValue(currentQuestion.option_1 ?? "")
+                    }
+                  >
+                    {currentQuestion.option_1}
+                  </CustomButton>
+                )}
+                {currentQuestion.option_2 && (
+                  <CustomButton
+                    data-selected={checkedValue === currentQuestion.option_2}
+                    type="button"
+                    onClick={() =>
+                      setCheckedValue(currentQuestion.option_2 ?? "")
+                    }
+                  >
+                    {currentQuestion.option_2}
+                  </CustomButton>
+                )}
+                {currentQuestion.option_3 && (
+                  <CustomButton
+                    data-selected={checkedValue === currentQuestion.option_3}
+                    type="button"
+                    onClick={() =>
+                      setCheckedValue(currentQuestion.option_3 ?? "")
+                    }
+                  >
+                    {currentQuestion.option_3}
+                  </CustomButton>
+                )}
+                {currentQuestion.option_4 && (
+                  <CustomButton
+                    data-selected={checkedValue === currentQuestion.option_4}
+                    type="button"
+                    onClick={() =>
+                      setCheckedValue(currentQuestion.option_4 ?? "")
+                    }
+                  >
+                    {currentQuestion.option_4}
+                  </CustomButton>
+                )}
+              </div>
+            ) : (
+              <div className="grid gap-2">
+                <Label>Answer</Label>
+                <Input
+                  placeholder="enter your answer"
+                  value={checkedValue}
+                  onChange={(e) => setCheckedValue(e.target.value)}
+                />
+              </div>
+            )}
           </>
         ) : (
           <div className="flex flex-col justify-center items-center gap-3 my-6">
@@ -145,7 +185,7 @@ const CustomButton = ({
     <Button
       type="button"
       className={cn(
-        "bg-accent h-fit text-wrap whitespace-normal text-primary flex items-center justify-start gap-6 border border-secondary hover:border-primary hover:bg-primary/20 data-[selected=true]:bg-primary/20 data-[selected=true]:border-primary",
+        "bg-background h-fit text-wrap whitespace-normal text-primary flex items-center text-left justify-start gap-6 border hover:border-primary hover:bg-primary data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground",
         className
       )}
       {...props}

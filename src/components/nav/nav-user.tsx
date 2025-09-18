@@ -28,7 +28,7 @@ export default function NavUser({ user }: { user: AuthUser }) {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {/* <DropdownMenuItem>Profile</DropdownMenuItem> */}
         <DropdownMenuItem

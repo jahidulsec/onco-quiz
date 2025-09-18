@@ -1,4 +1,3 @@
-import Logo from "@/components/logo/logo";
 import { Section } from "@/components/section/section";
 import { PageHeading, PageSubTitle } from "@/components/typography/heading";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,8 @@ import Link from "next/link";
 import React from "react";
 
 export default async function UserHomePage() {
+
+
   return (
     <>
       <HeaderContainer />
@@ -18,7 +19,7 @@ export default async function UserHomePage() {
 const HeaderContainer = async () => {
   return (
     <Section>
-      <Logo className="flex-row mb-6 [&_h4]:max-w-10 leading-4" />
+      {/* title */}
       <PageHeading className="text-balance text-primary">
         Challenge your <br /> knowledge
       </PageHeading>

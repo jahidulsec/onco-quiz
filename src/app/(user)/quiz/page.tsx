@@ -1,4 +1,4 @@
-import { StateSection } from "@/components/section/section";
+import { Section, StateSection } from "@/components/section/section";
 import { NoData } from "@/components/state/state";
 import { Button } from "@/components/ui/button";
 import { addParticipate } from "@/feature/participate/actions/participate";
@@ -12,12 +12,12 @@ import React from "react";
 export default async function QuizPage() {
   const authUser = await verifyAutuser();
 
-  const question = await getQuizzes();
+  const question = await getQuizzes(authUser?.id as string);
   const submissions = await getQuizSubmit(authUser?.id as string);
 
   if (submissions?.count ?? 0 > 0)
     return (
-      <div className="min-h-[50vh] flex flex-col gap-3 justify-center items-center">
+      <Section className="min-h-[50vh] flex flex-col gap-3 justify-center items-center">
         <div className="relative w-20 aspect-square">
           <Image src={"/images/submit.png"} alt="submit icon" fill />
         </div>
@@ -31,7 +31,7 @@ export default async function QuizPage() {
             <Link href={"/"}>Go Back</Link>
           </Button>
         </div>
-      </div>
+      </Section>
     );
 
   if (question?.count === 0) {
@@ -52,10 +52,12 @@ export default async function QuizPage() {
   });
 
   return (
-    <QuizContainer
-      question={question}
-      submissions={submissions}
-      user_id={authUser?.id}
-    />
+    <Section>
+      <QuizContainer
+        question={question}
+        submissions={submissions}
+        user_id={authUser?.id}
+      />
+    </Section>
   );
 }
