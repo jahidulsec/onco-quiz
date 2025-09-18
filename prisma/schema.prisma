@@ -8,42 +8,68 @@ datasource db {
 }
 
 model quiz {
-  id         String     @id @db.VarChar(36)
-  question   String     @db.VarChar(200)
-  option_1   String     @db.VarChar(100)
-  option_2   String     @db.VarChar(100)
-  option_3   String     @db.VarChar(100)
-  option_4   String     @db.VarChar(100)
-  answer     Int
-  group_id   String     @db.VarChar(36)
-  quiz_group quiz_group @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "fk_quiz_group")
+  id          String        @id @db.VarChar(36)
+  question    String        @db.VarChar(200)
+  option_1    String        @db.VarChar(100)
+  option_2    String        @db.VarChar(100)
+  option_3    String        @db.VarChar(100)
+  option_4    String        @db.VarChar(100)
+  answer      Int
+  group_id    String        @db.VarChar(36)
+  quiz_group  quiz_group    @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "fk_quiz_group")
+  quiz_submit quiz_submit[]
 
   @@index([group_id], map: "idx_group_id")
 }
 
 model quiz_group {
-  id         String    @id @db.VarChar(36)
-  name       String    @db.VarChar(50)
-  start      DateTime  @db.DateTime(0)
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  id         String       @id @db.VarChar(36)
+  name       String       @db.VarChar(50)
+  start      DateTime     @db.DateTime(0)
+  created_at DateTime?    @default(now()) @db.Timestamp(0)
+  updated_at DateTime?    @default(now()) @db.Timestamp(0)
+  group_user group_user[]
   quiz       quiz[]
 }
 
 model quiz_submit {
-  id      String @id @db.VarChar(36)
-  user_id String @db.VarChar(36)
-  quiz_id String @db.VarChar(36)
-  answer  Int
+  id         String    @id @db.VarChar(36)
+  user_id    String    @db.VarChar(36)
+  quiz_id    String    @db.VarChar(36)
+  answer     Int
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  quiz       quiz      @relation(fields: [quiz_id], references: [id], onDelete: Cascade, map: "fk_quiz_submit")
+  user       user      @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_user_submit")
 
   @@unique([user_id, quiz_id], map: "uniq_user_quiz")
+  @@index([quiz_id], map: "fk_quiz_submit")
 }
 
 model user {
-  id         String    @id @db.VarChar(36) @default(uuid())
-  name       String    @db.VarChar(100)
-  email      String    @unique(map: "idx_email") @db.VarChar(150)
-  institute  String    @db.VarChar(150)
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  id          String        @id @default(uuid()) @db.VarChar(36)
+  name        String        @db.VarChar(100)
+  email       String        @unique(map: "idx_email") @db.VarChar(150)
+  institute   String        @db.VarChar(150)
+  created_at  DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at  DateTime?     @default(now()) @db.Timestamp(0)
+  mobile      String        @db.VarChar(14)
+  password    String        @db.VarChar(100)
+  group_user  group_user[]
+  quiz_submit quiz_submit[]
+}
+
+model group_user {
+  id         String     @id @db.VarChar(36)
+  user_id    String     @db.VarChar(36)
+  group_id   String     @db.VarChar(36)
+  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at DateTime?  @default(now()) @db.Timestamp(0)
+  start_date DateTime   @db.DateTime(0)
+  end_date   DateTime?  @db.DateTime(0)
+  duration_s Float?     @db.Float
+  quiz_group quiz_group @relation(fields: [group_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_group_user_group")
+  user       user       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_group_user_user")
+
+  @@unique([user_id, group_id], map: "uniq_user_group")
+  @@index([group_id], map: "fk_group_user_group")
 }

@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased font-urbanist`}>
+      <body className={`antialiased font-spacegrotesk`}>
         <ProgressProvider>
           {children}
           <Toaster closeButton richColors position="top-right" />
