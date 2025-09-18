@@ -1,16 +1,21 @@
 import { Section } from "@/components/section/section";
+import { timeConversion } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 import { BookCopy, GraduationCap, LucideIcon } from "lucide-react";
 import React from "react";
 
-export default function CardSection() {
+export default function CardSection({ result }: { result: any }) {
   return (
     <Section className="grid grid-cols-2 gap-1">
       <Card
         item={{
           title: "Rank",
           icon: BookCopy,
-          value: <p className="text-2xl font-semibold">3</p>,
+          value: (
+            <p className="text-2xl font-semibold">
+              {Number(result.data?.[0]?.rank)}
+            </p>
+          ),
         }}
       />
 
@@ -20,7 +25,10 @@ export default function CardSection() {
           icon: GraduationCap,
           value: (
             <p>
-              <strong className="text-2xl">3</strong> <span>/ 5</span>
+              <strong className="text-2xl">
+                {Number(result.data?.[0]?.total_mark) * 5}
+              </strong>{" "}
+              <span>/ 50</span>
             </p>
           ),
         }}
@@ -28,10 +36,18 @@ export default function CardSection() {
 
       <div
         className={cn(
-          "rounded-xl bg-muted/75 p-4 flex flex-col justify-center gap-4 col-span-2 border border-primary/50"
+          "rounded-xl bg-foreground p-4 flex flex-col justify-center gap-4 col-span-2 border border-primary/50"
         )}
       >
-        <h3 className="font-semibold text-primary">Overview</h3>
+        <h3 className="font-semibold text-secondary">Overview</h3>
+        <div className="grid grid-cols-[0.75fr_1fr] items-center gap-1 text-background">
+          <p><strong className="text-2xl">{Number(result.data?.[0]?.total_mark)}</strong> / 10</p>
+          <p className="text-sm text-right font-medium">Correct Answer</p>
+          <strong>
+            {timeConversion(Number(result.data?.[0]?.total_duration) * 1000)}
+          </strong>
+          <p className="text-sm text-right font-medium">Overall time spent</p>
+        </div>
       </div>
     </Section>
   );
