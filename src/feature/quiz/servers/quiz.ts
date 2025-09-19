@@ -102,27 +102,11 @@ export const getQuizSubmit = async (userId: string) => {
     const [data, count] = await Promise.all([
       db.quiz_submit.findMany({
         where: {
-          quiz: {
-            quiz_group: {
-              start: {
-                gte: new Date(format(currentDate, "yyyy-MM-dd")),
-                lt: new Date(format(newDate, "yyyy-MM-dd")),
-              },
-            },
-          },
           user_id: userId,
         },
       }),
       db.quiz_submit.count({
         where: {
-          quiz: {
-            quiz_group: {
-              start: {
-                gte: new Date(format(currentDate, "yyyy-MM-dd")),
-                lt: new Date(format(newDate, "yyyy-MM-dd")),
-              },
-            },
-          },
           user_id: userId,
         },
       }),
