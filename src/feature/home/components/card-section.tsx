@@ -1,7 +1,14 @@
 import { Section } from "@/components/section/section";
+import { Button } from "@/components/ui/button";
 import { timeConversion } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
-import { BookCopy, GraduationCap, LucideIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookCopy,
+  GraduationCap,
+  LucideIcon,
+} from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function CardSection({ result }: { result: any }) {
@@ -41,7 +48,12 @@ export default function CardSection({ result }: { result: any }) {
       >
         <h3 className="font-semibold text-secondary">Overview</h3>
         <div className="grid grid-cols-[0.75fr_1fr] items-center gap-1 text-background">
-          <p><strong className="text-2xl">{Number(result.data?.[0]?.total_mark)}</strong> / 10</p>
+          <p>
+            <strong className="text-2xl">
+              {Number(result.data?.[0]?.total_mark)}
+            </strong>{" "}
+            / 10
+          </p>
           <p className="text-sm text-right font-medium">Correct Answer</p>
           <strong>
             {timeConversion(Number(result.data?.[0]?.total_duration) * 1000)}
@@ -49,6 +61,12 @@ export default function CardSection({ result }: { result: any }) {
           <p className="text-sm text-right font-medium">Overall time spent</p>
         </div>
       </div>
+
+      <Button size={"lg"} className="rounded-xl col-span-2" asChild>
+        <Link href={`/leaderboard`}>
+          Leaderboard <ArrowUpRight />
+        </Link>
+      </Button>
     </Section>
   );
 }

@@ -1,22 +1,28 @@
 import { cn } from "@/lib/utils";
-import {  MessageCircleOff } from "lucide-react";
-import Image from "next/image";
+import { Folder, MessageCircleOff } from "lucide-react";
 import React from "react";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
-const NoData = ({ className, message="No data", ...props }: React.ComponentProps<"div"> & {message?: string}) => {
+const NoData = () => {
   return (
-    <div
-      className={cn(
-        "flex flex-col gap-1 text-muted-foreground/50 pointer-events-none my-3 justify-center items-center",
-        className
-      )}
-      {...props}
-    >
-      <div className="relative w-30 aspect-square opacity-50 poien">
-        <Image src={"/images/corrupted-file.png"} alt="" fill />
-      </div>
-      <p className="text-xs">{message}</p>
-    </div>
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <Folder />
+        </EmptyMedia>
+        <EmptyTitle>No Quiz Yet</EmptyTitle>
+        <EmptyDescription>
+          Currently, quiz data is not found for this time. Please try again
+          later.
+        </EmptyDescription>
+      </EmptyHeader>
+    </Empty>
   );
 };
 
