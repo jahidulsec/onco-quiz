@@ -10,3 +10,8 @@ npx prisma generate
 echo ""
 echo "3. Build app"
 npm run build
+
+
+echo ""
+echo "4. Update process"
+pm2 restart onco-quiz
