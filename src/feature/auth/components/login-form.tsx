@@ -2,13 +2,11 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import {
   PageHeading,
   PageSubTitle,
 } from "../../../components/typography/heading";
 import { Form, FormButton, FormItem } from "../../../components/forms/form";
-import { PasswordInput } from "../../../components/input/password";
 import { loginUser } from "../actions/auth";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
@@ -40,6 +38,16 @@ export function LoginForm() {
       </div>
       <div className="grid gap-6">
         <FormItem>
+          <Label htmlFor="name">Full Name</Label>
+          <Input
+            id="name"
+            name="name"
+            placeholder="m@example.com"
+            defaultValue={data?.values?.name?.toString() ?? undefined}
+          />
+          {data?.error && <ErrorMessage message={data.error.name ?? ""} />}
+        </FormItem>
+        <FormItem>
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
@@ -50,24 +58,28 @@ export function LoginForm() {
           />
           {data?.error && <ErrorMessage message={data.error.email ?? ""} />}
         </FormItem>
-        <FormItem className="grid gap-3">
-          <Label htmlFor="password">Password</Label>
-          <PasswordInput
-            id="password"
-            placeholder="password"
-            type="password"
-            name="password"
-            defaultValue={data?.values?.password?.toString() ?? undefined}
+        <FormItem>
+          <Label htmlFor="mobile">Mobile</Label>
+          <Input
+            id="mobile"
+            name="mobile"
+            placeholder="01XXX XXX XXX"
+            defaultValue={data?.values?.mobile?.toString() ?? undefined}
           />
-          {data?.error && <ErrorMessage message={data.error.password ?? ""} />}
+          {data?.error && <ErrorMessage message={data.error.mobile ?? ""} />}
         </FormItem>
+        <FormItem>
+          <Label htmlFor="institute">Institute</Label>
+          <Input
+            id="institute"
+            name="institute"
+            placeholder="Institution"
+            defaultValue={data?.values?.institute?.toString() ?? undefined}
+          />
+          {data?.error && <ErrorMessage message={data.error.institute ?? ""} />}
+        </FormItem>
+
         <FormButton pending={pending}>Login</FormButton>
-      </div>
-      <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <Link href="/sign-up" className="underline underline-offset-4">
-          Sign up
-        </Link>
       </div>
     </Form>
   );
