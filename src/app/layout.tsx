@@ -4,8 +4,8 @@ import ProgressProvider from "@/providers/progress-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Onco Mastermind",
-  description: "Onco mastermind quiz challenge",
+  title: "Onco MindMaster",
+  description: "Onco MindMaster quiz challenge",
 };
 
 export const dynamic = 'force-dynamic'
