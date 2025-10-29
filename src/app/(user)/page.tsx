@@ -24,7 +24,12 @@ export default async function UserHomePage() {
 }
 
 const HeaderContainer = async () => {
-  const quiz = await db.quiz_group.findFirst();
+  const quiz = await db.quiz_group.findFirst({
+    orderBy: { created_at: "desc" },
+  });
+
+  const quizNextTwoDay = quiz?.start;
+  if (quiz) quizNextTwoDay?.setDate(quiz?.start.getDate() + 1);
 
   return (
     <Section>
@@ -33,10 +38,11 @@ const HeaderContainer = async () => {
         Challenge your <br /> knowledge
       </PageHeading>
 
-      {quiz && (
+      {quizNextTwoDay && quizNextTwoDay >= new Date() && (
         <div className="flex justify-between items-center gap-3 flex-wrap my-4">
           <PageSubTitle className="text-sm">
-            Quiz starts at <strong>{format(quiz?.start, "LLL dd, yyyy - h:mm aaa")}</strong>
+            Quiz starts at{" "}
+            <strong>{format(quiz?.start, "LLL dd, yyyy - h:mm aaa")}</strong>
           </PageSubTitle>
 
           {quiz.start < new Date() && (
