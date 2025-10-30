@@ -42,7 +42,7 @@ export function LoginForm() {
           <Input
             id="name"
             name="name"
-            placeholder="m@example.com"
+            placeholder="John Doe"
             defaultValue={data?.values?.name?.toString() ?? undefined}
           />
           {data?.error && <ErrorMessage message={data.error.name ?? ""} />}

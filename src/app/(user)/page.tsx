@@ -28,8 +28,9 @@ const HeaderContainer = async () => {
     orderBy: { created_at: "desc" },
   });
 
-  const quizNextTwoDay = quiz?.start;
-  if (quiz) quizNextTwoDay?.setDate(quiz?.start.getDate() + 1);
+  const quizDate = quiz?.start ? new Date(quiz?.start) : new Date();
+  const quizNextTwoDay = quiz?.start ? new Date(quiz?.start) : new Date();
+  if (quiz) quizNextTwoDay?.setDate(quizNextTwoDay.getDate() + 1);
 
   return (
     <Section>
@@ -42,10 +43,12 @@ const HeaderContainer = async () => {
         <div className="flex justify-between items-center gap-3 flex-wrap my-4">
           <PageSubTitle className="text-sm">
             Quiz starts at{" "}
-            <strong>{format(quiz?.start, "LLL dd, yyyy - h:mm aaa")}</strong>
+            <strong>
+              {format(quizDate as Date, "LLL dd, yyyy - h:mm aaa")}
+            </strong>
           </PageSubTitle>
 
-          {quiz.start < new Date() && (
+          {quizDate < new Date() && (
             <Button asChild className="rounded-full">
               <Link href={"/quiz"}>Participate</Link>
             </Button>
